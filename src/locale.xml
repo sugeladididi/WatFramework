@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locales>
+	<locale language-country="zh_CN">
+		<pair key="hello" value="你好" />
+		<pair key="world" value="世界" />
+	</locale>
+	<locale language-country="en_US">
+		<pair key="hello" value="Hello" />
+		<pair key="world" value="World" />
+	</locale>
+</locales>

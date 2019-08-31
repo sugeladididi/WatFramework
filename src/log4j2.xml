@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+
+<!-- 表示本日志的基础等级为OFF，检查该xml配置文件是否更改，刷新频率为30秒-->
+<configuration status="info" monitorInterval="30">
+	<properties>
+	    <property name="LOG_HOME">D:\MyWorkspace\everyDay\Day3_MVC+MySQL</property>
+	</properties>
+	
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>		
+		</Console>
+		
+		<RollingFile name="RollingFileInfo" fileName="${LOG_HOME}/logs/info.log"
+                     filePattern="${LOG_HOME}/logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">
+                 
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+				<ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %logger{36} - %m%n"/>
+            
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+ 
+        <RollingFile name="RollingFileWarn" fileName="${LOG_HOME}/logs/warn.log"
+                     filePattern="${LOG_HOME}/logs/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <ThresholdFilter level="WARN"/>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %logger{36} - %m%n"/>
+            <Policies>
+				<TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+ 
+        <RollingFile name="RollingFileError" fileName="${LOG_HOME}/logs/error.log"
+                     filePattern="${LOG_HOME}/logs/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="ERROR"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %logger{36} - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+ 
+    </appenders>
+	
+	<loggers>
+		<root level="info">
+			<appender-ref ref="Console"/>
+			<AppenderRef ref="RollingFileInfo" /> 
+			<AppenderRef ref="RollingFileWarn" /> 
+			<AppenderRef ref="RollingFileError" /> 
+		</root>
+	</loggers>
+	
+</configuration>
+
